@@ -1,0 +1,6 @@
+to make:
+`make ttyecho`
+
+for permissions:
+`sudo chown root:root ttyecho`
+`sudo chmod u+s ttyecho`

@@ -1,0 +1,83 @@
+;; .emacs
+
+
+
+;; Makes *scratch* empty.
+(setq initial-scratch-message "")
+
+;; Removes *scratch* from buffer after the mode has been set.
+(defun remove-scratch-buffer ()
+  (if (get-buffer "*scratch*")
+        (kill-buffer "*scratch*")))
+	(add-hook 'after-change-major-mode-hook 'remove-scratch-buffer)
+
+;; Removes *messages* from the buffer.
+(setq-default message-log-max nil)
+(kill-buffer "*Messages*")
+
+;; Removes *Completions* from buffer after you've opened a file.
+(add-hook 'minibuffer-exit-hook
+      '(lambda ()
+               (let ((buffer "*Completions*"))
+	                  (and (get-buffer buffer)
+			                  (kill-buffer buffer)))))
+
+;; Don't show *Buffer list* when opening multiple files at the same time.
+(setq inhibit-startup-buffer-menu t)
+
+;; Show only one active window when opening multiple files at the same time.
+(add-hook 'window-setup-hook 'delete-other-windows)
+
+
+
+;;; uncomment this line to disable loading of "default.el" at startup
+;; (setq inhibit-default-init t)
+
+;; turn on font-lock mode
+(when (fboundp 'global-font-lock-mode)
+(global-font-lock-mode t))
+
+;; enable visual feedback on selections
+;(setq transient-mark-mode t)
+
+;; default to better frame titles
+(setq frame-title-format
+(concat  "%b - emacs@" (system-name)))
+
+;; default to unified diffs
+(setq diff-switches "-u")
+
+
+(custom-set-faces                                                                                
+;; custom-set-faces was added by Custom.                                       
+;; If you edit it by hand, you could mess it up, so be careful.                
+;; Your init file should contain only one such instance.                       
+;; If there is more than one, they won't work right.                           
+'(default ((t (:inherit nil :stipple nil :background "color-16" :foreground "color-216" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 98 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))  
+'(border ((t (:background "black" :foreground "white"))))
+'(menu ((((type x-toolkit)) (:background "color-16" :foreground "color-198"))))
+'(mode-line ((((class color) (min-colors 88)) (:background "color-161" :foreground "color-16" :box (:line-width -1 :style released-button)))))
+'(region ((((class color) (min-colors 88) (background dark)) (:background "darkolivegreen"))))
+'(scroll-bar ((t (:background "black" :foreground "white"))))
+
+;; find faces with M-x list-faces-display
+`(font-lock-variable-name-face ((t (:foreground "color-226")))) ;; variable definition
+'(font-lock-constant-face ((t (:foreground "color-121")))) ;; true/false
+'(font-lock-function-name-face ((t (:foreground "color-37")))) ;; function name
+'(font-lock-keyword-face ((t (:foreground "color-32")))) ;; if/return/const/else/while
+;;'(font-lock-preprocessor-face ((t (:foreground "color-121")))) ;;include
+'(font-lock-preprocessor-face ((t (:foreground "color-130")))) ;;include
+'(font-lock-type-face ((t (:foreground "color-82")))) ;; types (ex: double or TH1)
+'(font-lock-comment-face ((t (:foreground "color-196")))) ;; comments
+'(font-lock-string-face ((t (:foreground "color-147")))) ;; strings
+'(sh-quoted-exec ((t (:foreground "color-51")))) ;; command string in bash, ie `cmd`
+
+'(tool-bar ((default (:background "black" :foreground "white" :box (:line-width 1 :style released-button))) (((type x w32 ns) (class color)) (:background "grey75")))))
+
+;; always end a file with a newline
+;(setq require-final-newline 'query)
+
+;disable backup
+(setq backup-inhibited t)
+;disable auto save
+(setq auto-save-default nil)

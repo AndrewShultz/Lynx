@@ -1,0 +1,82 @@
+
+
+
+;; Makes *scratch* empty.
+(setq initial-scratch-message "")
+
+;; Removes *scratch* from buffer after the mode has been set.
+(defun remove-scratch-buffer ()
+  (if (get-buffer "*scratch*")
+        (kill-buffer "*scratch*")))
+	(add-hook 'after-change-major-mode-hook 'remove-scratch-buffer)
+
+;; Removes *messages* from the buffer.
+(setq-default message-log-max nil)
+(kill-buffer "*Messages*")
+
+;; Removes *Completions* from buffer after you've opened a file.
+(add-hook 'minibuffer-exit-hook
+      '(lambda ()
+               (let ((buffer "*Completions*"))
+	                  (and (get-buffer buffer)
+			                  (kill-buffer buffer)))))
+
+;; Don't show *Buffer list* when opening multiple files at the same time.
+(setq inhibit-startup-buffer-menu t)
+
+;; Show only one active window when opening multiple files at the same time.
+(add-hook 'window-setup-hook 'delete-other-windows)
+
+
+
+
+(defface highlight
+  '((((class color) (min-colors 88) (background light))
+     :background "darkseagreen2")
+    (((class color) (min-colors 88) (background dark))
+     :background "darkolivegreen")
+    (((class color) (min-colors 16) (background light))
+     :background "darkseagreen2")
+    (((class color) (min-colors 16) (background dark))
+     :background "darkolivegreen")
+    (((class color) (min-colors 8))
+     :background "green" :foreground "black")
+    (t :inverse-video t))
+  "Basic face for highlighting."
+  :group 'basic-faces)
+
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(border ((t (:background "white" :foreground "black"))))
+ '(default ((t (:inherit nil :stipple nil :background "brightwhite" :foreground "color-16" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :width expanded :foundry "unknown" :family "DejaVu Sans Mono-14"))))
+ '(menu ((((type x-toolkit)) (:background "color-208" :foreground "color-16"))))
+ '(mode-line ((((class color) (min-colors 88)) (:background "color-208" :foreground "color-16" :box (:line-width -1 :style released-button)))))
+ '(region ((((class color) (min-colors 88) (background light)) (:background "black" :foreground "white"))))
+ '(scroll-bar ((t (:background "black" :foreground "white"))))
+ '(font-lock-constant-face ((t (:foreground "color-125")))) ;; true/false
+ '(font-lock-function-name-face ((t (:foreground "color-20")))) ;; function name
+ ;;'(font-lock-doc-face ((t (:foreground "color-124")))) ;;unknown
+ ;;'(font-lock-doc-string-face ((t (:foreground "yellow2")))) ;;unknown
+ '(font-lock-keyword-face ((t (:foreground "color-32")))) ;; if/return/const/else/while
+ ;;'(font-lock-preprocessor-face ((t (:foreground "color-124")))) ;;include
+ ;;'(font-lock-reference-face ((t (:foreground "color-124")))) ;;unknown
+ '(font-lock-type-face ((t (:foreground "color-28")))) ;; types (ex: double or TH1)
+ '(font-lock-variable-name-face ((t (:foreground "color-208"))))
+ ;;'(font-lock-warning-face ((t (:foreground "color-124")))) ;;unknown
+ '(font-lock-comment-face ((t (:foreground "color-124")))) ;; comments
+ '(font-lock-string-face ((t (:foreground "color-124")))) ;; strings
+ '(tool-bar ((default (:background "black" :foreground "white" :box (:line-width 1 :style released-button))) (((type x w32 ns) (class color)) (:background "grey75")))))
+
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
+(global-set-key "\C-x\ \C-r" 'recentf-open-files)

@@ -1,0 +1,35 @@
+#!/bin/bash
+
+#CURR=`cat /home/dulain/bashscripts/setting_brightness`
+#if [ "$CURR" = "100" ] 
+#then
+#    echo "Brightness At Max"
+#    notify-send " " -i display-brightness-max -h int:value:100 -h string:synchronous:bright
+#    exit
+#fi
+#((CURR++))
+#((CURR++))
+#((CURR++))
+#((CURR++))
+#((CURR++))
+#echo $CURR
+#echo $CURR > /home/dulain/bashscripts/setting_brightness
+
+#VAR="100.0-$CURR"
+#DIFF=`awk "BEGIN { print $VAR }"`
+#VAR="0.003*$DIFF"
+#MULT=`awk "BEGIN { print $VAR }"`
+#VAR="1.0+$MULT"
+#GAMMA=`awk "BEGIN { print $VAR }"`
+
+#VAR="$CURR/100.0"
+#PER=`awk "BEGIN { print $VAR }"`
+
+#xrandr --output LVDS --gamma $GAMMA:$GAMMA:$GAMMA --brightness $PER
+#notify-send " " -i display-brightness -h int:value:$CURR -h string:synchronous:bright
+
+xbacklight -inc 2.5 -time 400
+#max=`cat /sys/class/backlight/intel_backlight/max_brightness`
+#cur=`cat /sys/class/backlight/intel_backlight/brightness`
+#per=`echo "100.0*(${cur}/${max})" | bc -l`
+#notify-send " " -i xfpm-brightness-lcd -h int:value:${per} -h string:synchronous:bright

@@ -1,0 +1,43 @@
+#!/bin/bash
+
+[ -z "$PS1" ] && return
+
+#enviroments
+source ${HOME}/Lynx/Path.env
+source ${HOME}/Lynx/LdLibraryPath.env
+source ${HOME}/Lynx/BrightEnv.env
+
+#defaults
+source ${HOME}/Lynx/default.env
+source ${HOME}/Lynx/default.load
+source ${HOME}/Lynx/default.alias
+source ${HOME}/Lynx/default.fun
+
+#all things color related
+source ${HOME}/Lynx/colors.load
+#all things terminal related
+source ${HOME}/Lynx/gnomeTerminalControl.fun
+#all things relating to informative messages sent to terminal
+source ${HOME}/Lynx/informer.fun
+#all things audio
+source ${HOME}/Lynx/audio.fun
+#all things music
+source ${HOME}/Lynx/music.fun
+#all things related to power off and restart 
+source ${HOME}/Lynx/systemPower.fun
+#all things relating to latex
+source ${HOME}/Lynx/latex.fun
+#all things relating to handling files
+source ${HOME}/Lynx/files.fun
+#all things relating to the UW ccluster
+source ${HOME}/Lynx/UW-M.alias
+source ${HOME}/Lynx/UW-M.fun
+#things for stretching
+source ${HOME}/Lynx/workout.fun
+
+if [ "$BRIGHT_ENV" -eq "1" ] 
+then
+    GnomeTerminalChangeToLight
+else 
+    GnomeTerminalChangeToDark
+fi

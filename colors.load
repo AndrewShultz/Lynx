@@ -1,0 +1,173 @@
+#!/bin/bash
+
+asRed=$(tput setab 1)$(tput setaf 15)
+asBloodRed=$(tput setab 124)$(tput setaf 15)
+asGreen=$(tput setab 70)$(tput setaf 16)
+asGrassGreen=$(tput setab 106)$(tput setaf 16)
+asBlue=$(tput setab 68)$(tput setaf 16)
+asWaterBlue=$(tput setab 156)$(tput setaf 16)
+asOrange=$(tput setab 202)$(tput setaf 16)
+asPurple=$(tput setab 205)$(tput setaf 16)
+asPink=$(tput setab 216)$(tput setaf 16)
+asCyan=$(tput setab 87)$(tput setaf 16)
+asBrown=$(tput setab 130)$(tput setaf 16)
+asGrey=$(tput setab 245)$(tput setaf 16)
+asGold=$(tput setab 136)$(tput setaf 16)
+asSilver=$(tput setab 252)$(tput setaf 16)
+asHoneyBee=$(tput setab 232)$(tput setaf 226)
+asLTF1=$(tput setab 196)$(tput setaf 154)
+
+
+colors=()
+colors[0]="\033[48;5;1m\033[38;5;15m"
+colors[1]="\033[48;5;124m\033[38;5;16m"
+colors[2]="\033[48;5;70m\033[38;5;16m"
+colors[3]="\033[48;5;106m\033[38;5;16m"
+colors[4]="\033[48;5;68m\033[38;5;16m"
+colors[5]="\033[48;5;156m\033[38;5;16m"
+colors[6]="\033[48;5;202m\033[38;5;16m"
+colors[7]="\033[48;5;205m\033[38;5;16m"
+colors[8]="\033[48;5;216m\033[38;5;16m"
+colors[9]="\033[48;5;87m\033[38;5;16m"
+colors[10]="\033[48;5;130m\033[38;5;16m"
+colors[11]="\033[48;5;245m\033[38;5;16m"
+colors[12]="\033[48;5;136m\033[38;5;16m"
+colors[13]="\033[48;5;252m\033[38;5;16m"
+colors[14]="\033[48;5;232m\033[38;5;226m"
+colors[15]="\033[48;5;196m\033[38;5;154m"
+clr="\033[0m"
+
+if [[ $- == *i* ]]; then
+    PS1="\[$(tput setaf 67)\]\[$(tput bold)\][\@]\[$(tput setaf 65)\] \w $ \[$(tput setaf 209)\]"
+fi
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto -I "*~"'
+    #alias ls='ls --color=auto'
+# SEE: http://www.bigsoft.co.uk/blog/index.php/2008/04/11/configuring-ls_colors
+    AJSLSCOLORS_DIRECTORY="di=1;4;94"
+    AJSLSCOLORS_FILE="0;35"
+    AJSLSCOLORS_LINK="1;32"
+    AJSLSCOLORS_EXE="1;32"
+    AJSLSCOLORS_C='*.C=1;35;40'
+    AJSLSCOLORS_CXX1='*.cxx=1;35;40'
+    AJSLSCOLORS_CXX2='*.cc=1;35;40'
+    AJSLSCOLORS_H='*.h=1;35;40'
+    AJSLSCOLORS_HH='*.hh=1;35;40'
+    AJSLSCOLORS_MK='*.mk=1;35;40'
+    AJSLSCOLORS_SKIP='*~=8'
+    LS_COLORS="$AJSLSCOLORS_DIRECTORY:fi=$AJSLSCOLORS_FILE:ln=$AJSLSCOLORS_LINK:ex=$AJSLSCOLORS_EXE:$AJSLSCOLORS_C:$AJSLSCOLORS_CXX1:$AJSLSCOLORS_CXX2:$AJSLSCOLORS_H:$AJSLSCOLORS_HH:$AJSLSCOLORS_MK:$AJSLSCOLORS_SKIP"
+    #
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+alias e='env TERM=xterm-256color emacs -nw'
+export GREP_COLOR='1;30;47'
+
+PRINTCOLORS()###USE###
+{
+    CNT=0
+    spacing="   "
+    for color in `seq 0 255`
+    do
+	
+	if [ $color -gt 9 ]
+	then
+	    spacing="  "
+	fi
+	if [ $color -gt 99 ]
+	then
+	    spacing=" "
+	fi
+    
+	if [ "$color" = "255" ]
+	then
+	    printf "$(tput setab $color)  $(tput sgr0)$(tput setaf $color)$color$(tput setab $color)${spacing}$(tput sgr0) \n";
+	elif [ "$CNT" = "5" ]
+	then
+	    printf "$(tput setab $color)  $(tput sgr0)$(tput setaf $color)$color$(tput setab $color)${spacing}$(tput sgr0) \n";
+	    #printf "$(tput setaf $color) color: $color $(tput sgr0) \n";
+	    CNT=0
+	else
+	    printf "$(tput setab $color)  $(tput sgr0)$(tput setaf $color)$color$(tput setab $color)${spacing}$(tput sgr0)   ";
+	    #printf "$(tput setaf $color) color: $color $(tput sgr0)\t";
+	    ((CNT++))
+	fi
+    done
+}
+
+PRINTCOLORS2()###USE###
+{
+    CNT=0
+    spacing="   "
+
+    for color in `seq 0 1 15`
+    do
+
+	
+	if [ $color -eq 8 ]
+	then
+	    printf "\n"
+	fi
+
+	if [ $color -gt 9 ]
+	then
+	    spacing="  "
+	fi
+
+	printf "$(tput setab $color)  $(tput sgr0)$(tput setaf $color)$color$(tput setab $color)${spacing}$(tput sgr0)   ";
+	
+    done
+
+    echo -e "\033[0m"
+    
+    for blu in `seq 0 1 5`
+    do
+
+	for gre in `seq 0 1 5`
+	do
+	    
+	    for red in `seq 0 1 5`
+	    do
+
+		color=`echo "16+$blu*36+$gre*6+$red" | bc -l`
+		#echo "$color"
+		
+		if [ $color -gt 9 ]
+		then
+		    spacing="  "
+		fi
+		if [ $color -gt 99 ]
+		then
+		    spacing=" "
+		fi
+		
+		if [ "$color" = "255" ]
+		then
+		    printf "$(tput setab $color)  $(tput sgr0)$(tput setaf $color)$color$(tput setab $color)${spacing}$(tput sgr0) \n";
+		elif [ "$CNT" = "5" ]
+		then
+		    printf "$(tput setab $color)  $(tput sgr0)$(tput setaf $color)$color$(tput setab $color)${spacing}$(tput sgr0) \n";
+		    #printf "$(tput setaf $color) color: $color $(tput sgr0) \n";
+		    CNT=0
+		else
+		    printf "$(tput setab $color)  $(tput sgr0)$(tput setaf $color)$color$(tput setab $color)${spacing}$(tput sgr0)   ";
+		    #printf "$(tput setaf $color) color: $color $(tput sgr0)\t";
+		    ((CNT++))
+		fi
+		
+	    done
+	done
+
+	echo ""
+	
+    done
+	    
+}
