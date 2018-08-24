@@ -30,7 +30,7 @@ source ${HOME}/Lynx/latex.fun
 #all things relating to handling files
 source ${HOME}/Lynx/files.fun
 #all things relating to the UW ccluster
-source ${HOME}/Lynx/UW-M.alias
+source ${HOME}/Lynx/UW-M.aliases
 source ${HOME}/Lynx/UW-M.fun
 #things for stretching
 source ${HOME}/Lynx/workout.fun
