@@ -1,6 +1,6 @@
 #!/bin/bash
 
-displays=`xrandr | grep " connected " | cut -d " " -f 1`
+displays=(`xrandr | grep " connected " | cut -d " " -f 1`)
 GAMMA=1.0
 curr=`xrandr --verbose | grep -m 1 -i brightness | cut -d " " -f 2`
 
@@ -11,7 +11,7 @@ else
     BRIGHT=`echo "${curr}+0.05" | bc -l`    
 fi
 
-for display in "${displays[*]}"
+for display in ${displays[*]}
 do
     xrandr --output $display --gamma $GAMMA:$GAMMA:$GAMMA --brightness $BRIGHT
 done
