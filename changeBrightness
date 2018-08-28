@@ -1,0 +1,20 @@
+#!/bin/bash
+
+displays=`xrandr | grep " connected " | cut -d " " -f 1`
+GAMMA=1.0
+curr=`xrandr --verbose | grep -m 1 -i brightness | cut -d " " -f 2`
+
+if [ "$1" == "d" ]
+then
+    BRIGHT=`echo "${curr}-0.1" | bc -l`
+else
+    BRIGHT=`echo "${curr}+0.05" | bc -l`    
+fi
+
+for display in "${displays[*]}"
+do
+    xrandr --output $display --gamma $GAMMA:$GAMMA:$GAMMA --brightness $BRIGHT
+done
+
+#echo "$display: $curr -> $BRIGHT"
+#streamer -f jpeg -o image.jpeg
