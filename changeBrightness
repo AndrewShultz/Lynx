@@ -13,7 +13,7 @@ fi
 
 for display in ${displays[*]}
 do
-    xrandr --output $display --gamma $GAMMA:$GAMMA:$GAMMA --brightness $BRIGHT
+    xrandr --output $display --gamma $GAMMA:0.8:0.6 --brightness $BRIGHT
 done
 
 #echo "$display: $curr -> $BRIGHT"

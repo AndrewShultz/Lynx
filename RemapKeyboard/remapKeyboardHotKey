@@ -1,0 +1,3 @@
+#!/bin/bash
+
+xkbcomp -w 0 /home/dulain/bashscripts/xkbmap $DISPLAY
