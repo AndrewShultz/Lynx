@@ -2,34 +2,6 @@
 
 
 
-;; Makes *scratch* empty.
-(setq initial-scratch-message "")
-
-;; Removes *scratch* from buffer after the mode has been set.
-(defun remove-scratch-buffer ()
-  (if (get-buffer "*scratch*")
-        (kill-buffer "*scratch*")))
-	(add-hook 'after-change-major-mode-hook 'remove-scratch-buffer)
-
-;; Removes *messages* from the buffer.
-(setq-default message-log-max nil)
-(kill-buffer "*Messages*")
-
-;; Removes *Completions* from buffer after you've opened a file.
-(add-hook 'minibuffer-exit-hook
-      '(lambda ()
-               (let ((buffer "*Completions*"))
-	                  (and (get-buffer buffer)
-			                  (kill-buffer buffer)))))
-
-;; Don't show *Buffer list* when opening multiple files at the same time.
-(setq inhibit-startup-buffer-menu t)
-
-;; Show only one active window when opening multiple files at the same time.
-(add-hook 'window-setup-hook 'delete-other-windows)
-
-
-
 ;;; uncomment this line to disable loading of "default.el" at startup
 ;; (setq inhibit-default-init t)
 
@@ -46,6 +18,8 @@
 
 ;; default to unified diffs
 (setq diff-switches "-u")
+
+
 
 
 (custom-set-faces                                                                                
@@ -81,3 +55,83 @@
 (setq backup-inhibited t)
 ;disable auto save
 (setq auto-save-default nil)
+
+
+
+
+;; ALLOW switching buffers using Alt-left/right (M-left/right)                                                                       
+                                                                                                                                     
+(defun xah-user-buffer-q ()                                                                                                          
+  "Return t if current buffer is a user buffer, else nil.                                                                            
+Typically, if buffer name starts with *, it's not considered a user buffer.                                                          
+This function is used by buffer switching command and close buffer command, so that next buffer shown is a user buffer.              
+You can override this function to get your idea of “user buffer”.                                                                    
+version 2016-06-18"                                                                                                                  
+  (interactive)                                                                                                                      
+  (if (string-equal "*" (substring (buffer-name) 0 1))                                                                               
+      nil                                                                                                                            
+    (if (string-equal major-mode "dired-mode")                                                                                       
+        nil                                                                                                                          
+      t                                                                                                                              
+      )))                                                                                                                            
+                                                                                                                                     
+(defun xah-next-user-buffer ()                                                                                                       
+  "Switch to the next user buffer.                                                                                                   
+“user buffer” is determined by `xah-user-buffer-q'.                                                                                  
+URL `http://ergoemacs.org/emacs/elisp_next_prev_user_buffer.html'                                                                    
+Version 2016-06-19"                                                                                                                  
+  (interactive)                                                                                                                      
+  (next-buffer)                                                                                                                      
+  (let ((i 0))                                                                                                                       
+    (while (< i 20)
+      (if (not (xah-user-buffer-q))                                                                                                  
+          (progn (next-buffer)                                                                                                       
+                 (setq i (1+ i)))                                                                                                    
+        (progn (setq i 100))))))                                                                                                     
+                                                                                                                                     
+(defun xah-previous-user-buffer ()                                                                                                   
+  "Switch to the previous user buffer.                                                                                               
+“user buffer” is determined by `xah-user-buffer-q'.                                                                                  
+URL `http://ergoemacs.org/emacs/elisp_next_prev_user_buffer.html'                                                                    
+Version 2016-06-19"                                                                                                                  
+  (interactive)                                                                                                                      
+  (previous-buffer)                                                                                                                  
+  (let ((i 0))                                                                                                                       
+    (while (< i 20)                                                                                                                  
+      (if (not (xah-user-buffer-q))                                                                                                  
+          (progn (previous-buffer)                                                                                                   
+                 (setq i (1+ i)))                                                                                                    
+        (progn (setq i 100))))))                                                                                                     
+                                                                                                                                     
+                                                                                                                                     
+(global-set-key (kbd "<M-left>") 'xah-previous-user-buffer)                                                                          
+(global-set-key (kbd "<M-right>") 'xah-next-user-buffer)
+
+
+
+;; KILL ALL NATTY BUFFERS                                                                                                            
+;; Makes *scratch* empty.                                                                                                            
+(setq initial-scratch-message "")                                                                                                    
+                                                                                                                                     
+;; Removes *scratch* from buffer after the mode has been set.                                                                        
+(defun remove-scratch-buffer ()                                                                                                      
+  (if (get-buffer "*scratch*")                                                                                                       
+      (kill-buffer "*scratch*")))                                                                                                    
+(add-hook 'after-change-major-mode-hook 'remove-scratch-buffer)                                                                      
+                                                                                                                                     
+;; Removes *messages* from the buffer.                                                                                               
+(setq-default message-log-max nil)                                                                                                   
+(kill-buffer "*Messages*")                                                                                                           
+                                                                                                                                     
+;; Removes *Completions* from buffer after you've opened a file.                                                                     
+(add-hook 'minibuffer-exit-hook                                                                                                      
+      '(lambda ()                                                                                                                    
+         (let ((buffer "*Completions*"))                                                                                             
+           (and (get-buffer buffer)                                                                                                  
+                (kill-buffer buffer)))))                                                                                             
+                                                                                                                                     
+;; Don't show *Buffer list* when opening multiple files at the same time.                                                            
+(setq inhibit-startup-buffer-menu t)
+
+;; Show only one active window when opening multiple files at the same time.
+(add-hook 'window-setup-hook 'delete-other-windows)

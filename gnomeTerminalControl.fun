@@ -197,3 +197,7 @@ GnomeTerminalChangeFont() {
     gconftool-2 --set /apps/gnome-terminal/profiles/Default/font --type=string "${fonts[$fontval]}"
 
 }
+
+SetKBR() {
+    xset r rate 250 50
+}
