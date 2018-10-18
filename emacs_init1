@@ -135,3 +135,41 @@ Version 2016-06-19"
 
 ;; Show only one active window when opening multiple files at the same time.
 (add-hook 'window-setup-hook 'delete-other-windows)
+
+
+
+
+
+
+(global-set-key (kbd "<f5>") 'compile)
+
+(require 'compile)
+(add-hook 'c-mode-hook
+	  (lambda ()
+	    (set (make-local-variable 'compile-command)
+		 (let ((file (file-name-nondirectory buffer-file-name)))
+		   (format "%s %s %s -o %s %s"
+			   (or (getenv "C++") "g++")
+			   (or (getenv "CPPFLAGS")  "-std=c++0x")file
+			   (file-name-sans-extension file)
+			   ;;(or (getenv "CFLAGS") "`root-config --cflags --glibs --libs` `clhep-config --libs` -lgpib")
+			   ;;)))))
+
+			   (or (getenv "CFLAGS") "`root-config --cflags --glibs --libs`  -lgpib -lAnitaAnalysis -lAnitaAnalysisTools -lAnitaCorrelator -lAnitaEvent -lAnitaMagicDisplay -lUCorrelator -lRootFftwWrapper -lRadioScatter")
+			    )))))
+
+
+
+;; close the compilation window if
+  ;; there was no error at all.
+  (defun compilation-exit-autoclose (status code msg)
+    ;; If M-x compile exists with a 0
+    (when (and (eq status 'exit) (zerop code))
+      ;; then bury the *compilation* buffer, so that C-x b doesn't go there
+;;      (bury-buffer)
+      ;; and delete the *compilation* window
+      (delete-window (get-buffer-window (get-buffer "*compilation*"))))
+    ;; Always return the anticipated result of compilation-exit-message-function
+    (cons msg code))
+  ;; Specify my function (maybe I should have done a lambda function)
+  (setq compilation-exit-message-function 'compilation-exit-autoclose)
