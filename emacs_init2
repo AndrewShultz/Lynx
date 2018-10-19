@@ -103,6 +103,7 @@ Version 2016-06-19"
                                                                                                                                      
 (global-set-key (kbd "<M-left>") 'xah-previous-user-buffer)                                                                          
 (global-set-key (kbd "<M-right>") 'xah-next-user-buffer)
+(global-set-key (kbd "<M-up>") (quote undo))                                                                          
 
 
 

@@ -106,6 +106,7 @@ Version 2016-06-19"
                                                                                                                                      
 (global-set-key (kbd "<M-left>") 'xah-previous-user-buffer)                                                                          
 (global-set-key (kbd "<M-right>") 'xah-next-user-buffer)
+(global-set-key (kbd "<M-up>") (quote undo))                                                                          
 
 
 
@@ -173,3 +174,6 @@ Version 2016-06-19"
     (cons msg code))
   ;; Specify my function (maybe I should have done a lambda function)
   (setq compilation-exit-message-function 'compilation-exit-autoclose)
+
+
+
