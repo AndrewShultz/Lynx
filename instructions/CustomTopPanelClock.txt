@@ -1,0 +1,2 @@
+- Install "gnome shell clock override"
+- Use: |%l:%M (%Ss) %p | %H:%M %Z (%z) | %b %d (%a), %Y |
