@@ -1,0 +1,5 @@
+#!/bin/bash
+
+#for i in `seq 0 5 100` ; do echo "$i" ; sleep 1 ; done
+outname=`echo "${@:2}" | sed "s^ ^\ ^g"`
+youtube-dl --extract-audio --audio-quality 0 --newline --audio-format mp3 -o "${outname}.%(ext)s" ${1} | grep --line-buffered -oP '^\[download\].*?\K([0-9.]+\%|#\d+ of \d)' #| sed -e "s^%^^g"

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+content=(`wget -qO- "$1"`)
+line=`echo "${content[*]}" | sed -e "s^</title>.*^^g" -e "s^.*<title>^^g" -e "s^&quot;^^g" -e "s^\&amp;^\&^g" -e "s^&#39;^'^g" -e "s^(Official.*Video)^^g" -e "s^ - YouTube^^g" -e "s^(.*)^^g"  -e "s^\[.*\]^^g" -e "s^{.*}^^g" -e 's/[[:space:]]*$//'` 
+line=`echo "$line" | sed 's/\b\([[:alpha:]]\)\([[:alpha:]]*\)\b/\u\1\L\2/g'`
+echo -n "$line"
