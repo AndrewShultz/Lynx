@@ -41,7 +41,11 @@ MusicMessorem()###USE###
     #	youtube-dl -f 140 $newline -o /home/dulain/Music/Rename/"%(title)s.%(ext)s"
     #    done < "/home/dulain/Music/messorem.txt"
     #    MusicMessoremConvert
-    python /home/dulain/python/YouTubeDL/dler.py 
+    
+    #python /home/dulain/python/YouTubeDL/dler.py
+
+    ${HOME}/Lynx/YouTubeDLer/YouTubeDLer
+    
 }
 
 Renamerem() {

@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
 
   QApplication app (argc, argv);
   QRect screenrect = app.primaryScreen()->geometry();
-  mainWindow = new MainWindow("/home/dulain/Music/messorem.txt","/home/dulain/Music/test/",screenrect.width());
+  mainWindow = new MainWindow("/home/dulain/Music/messorem.txt","/home/dulain/Music/Messorem/",screenrect.width());
   mainWindow->move(screenrect.left(), screenrect.top());
   mainWindow->show();
   
