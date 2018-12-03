@@ -333,3 +333,16 @@ BufferCacheClearance()###USE###
 {
     sudo /home/dulain/bashscripts/CacheClearance/clearcache
 }
+
+ZipIt()###USE###
+{
+    if [ -z $@ ] || [ ! -d $1 ]
+    then
+	echo "The input should be a directory"
+    else
+	zip z${1}.zip ${1}/*
+    fi
+
+    
+    
+}
