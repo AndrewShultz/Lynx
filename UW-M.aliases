@@ -1,5 +1,0 @@
-#!/bin/bash
-
-export WISC=aschultz@pub.icecube.wisc.edu
-alias WLog='ssh aschultz@pub.icecube.wisc.edu'
-alias LogW="ssh -Y -t aschultz@pub.icecube.wisc.edu 'export BRIGHT_ENV=$BRIGHT_ENV;bash -l'"

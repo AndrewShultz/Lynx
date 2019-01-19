@@ -121,15 +121,11 @@ CountTopLevelFiles()###USE###
     for i in $(find $(pwd) -maxdepth 1 -type d | sort); do echo -e "$(find "$i" | wc -l) files \t $(du -hs "$i"): $(readlink -f "$i")"; done | sort -nr
 }
 
-ListAllFunctionsUpdate2()###USE###
-{
+ListAllFunctionsUpdate2() {
 
-    LAFoutfile=${HOME}/bashscripts/allFunctions.list
+    LAFoutfile=${HOME}/Lynx/allFunctions.list
     if [ -f "${LAFoutfile}" ] ; then rm "${LAFoutfile}" ; fi
 
-    #asHeader=$(tput setab 227)$(tput setaf 232)
-    #asEntry=$(tput setab 88)$(tput setaf 83)
-    #asUseEntry=$(tput setab 208)$(tput setaf 21)
     asHeader=$(tput setaf 228)
     asHeader2=$(tput setab 228)
     asEntry=$(tput setaf 168)
@@ -139,33 +135,33 @@ ListAllFunctionsUpdate2()###USE###
     asAlias=$(tput setaf 87)
     asAlias2=$(tput setab 87)
     
-    files=(`cat ~/.bashrc | grep "source" | sed -e "s^.*source^^g"`)
+    aliasfiles=(`find ${HOME}/Lynx/ -name "*.alias"`)
+    funfiles=(`find ${HOME}/Lynx/ -name "*.fun"`)
     
     searchterm="("
     searchterm+=")"
     
-    for file in ${files[*]}
+    for file in ${aliasfiles[*]}
     do
-	ifile=`echo "$file" | sed -e "s^.*/^^g"`
-	iifile=`echo "$file" | sed -e 's^${HOME}^HOME^g' -e "s^HOME^${HOME}^g"`
-	echo -e "${asHeader2}\t\033[0m${asHeader} ${ifile}\033[0m" >> "${LAFoutfile}"
-	#funs=(`grep -E '^[[:space:]]*([[:alnum:]_]+[[:space:]]*\(\)|function[[:space:]]+[[:alnum:]_]+)' $file | sed -e "s^(^^g" -e "s^)^^g" -e "s^{^^g"`)
-	funs=(`grep $searchterm "$iifile" | sed -e "s^(^^g" -e "s^)^^g" -e "s^{^^g"`)
-	#alia=(`grep -v '#alias' $file | grep 'alias' | sed -e "s^alias^^g" -e "s^=.*^^g"`)
-	alia=(`grep -P '^alias' "$iifile" | sed -e "s^alias^^g" -e "s^=.*^^g"`)
-	
+	echo -e "${asHeader2}\t\033[0m${asHeader} ${file##*/}\033[0m" >> "${LAFoutfile}"
+	alia=(`grep -P '^alias' "${file}" | sed -e "s^alias^^g" -e "s^=.*^^g"`)
 	mess1=""
-	mess2=""
-
 	for ali in ${alia[*]}
 	do
-	    #innerali=`echo "$ali" | sed -e "s^al" && findRes=1 || findRes=0
-		mess1+="${asAlias2}\t\t\t\t\033[0m"
-		mess1+="${asAlias}"
-		mess1+=" $ali\033[0m\n"
-		#mess1+=
+	    mess1+="${asAlias2}\t\t\t\t\033[0m"
+	    mess1+="${asAlias}"
+	    mess1+=" ${ali}\033[0m\n"
 	done
-	
+	echo -ne "${mess1}" >> "${LAFoutfile}"
+    done
+
+
+    for file in ${funfiles[*]}
+    do
+	mess1=""
+	mess2=""
+	echo -e "${asHeader2}\t\033[0m${asHeader} ${file##*/}\033[0m" >> "${LAFoutfile}"
+	funs=(`grep "$searchterm" "$file" | sed -e "s^(^^g" -e "s^)^^g" -e "s^{^^g"`)
 	for fun in ${funs[*]}
 	do
 	    echo "$fun" | grep -q "###USE###" && findRes=1 || findRes=0
@@ -180,14 +176,11 @@ ListAllFunctionsUpdate2()###USE###
 		mess2+="${asEntry}"
 		mess2+=" $fun\033[0m\n"
 	    fi
-	    
 	done
-	    
-	echo -ne "$mess1" >> "${LAFoutfile}"
-	echo -ne "$mess2" >> "${LAFoutfile}"
-	
+	echo -ne "${mess1}" >> "${LAFoutfile}"
+	echo -ne "${mess2}" >> "${LAFoutfile}"
     done
-
+    
     echo "" >> "${LAFoutfile}"
     echo "" >> "${LAFoutfile}"
     echo "---KEY---" >> "${LAFoutfile}"
@@ -195,13 +188,12 @@ ListAllFunctionsUpdate2()###USE###
     echo -e "${asAlias2}\t\t\t\t\033[0m${asAlias} ALIAS \033[0m" >> "${LAFoutfile}"
     echo -e "${asUseEntry2}\t\t\t\t\033[0m${asUseEntry} Command line level FUNCTION \033[0m" >> "${LAFoutfile}"
     echo -e "${asEntry2}\t\t\t\t\t\t\t\t\033[0m${asEntry} Script level FUNCTION \033[0m" >> "${LAFoutfile}"
-        
+            
 }
 
-ListAllFunctionsNiceUpdate()###USE###
-{
+ListAllFunctionsNiceUpdate() {
 
-    LAFNoutfile=${HOME}/bashscripts/allFunctions.nicelist
+    LAFNoutfile=${HOME}/Lynx/allFunctions.nicelist
     if [ -f "${LAFNoutfile}" ] ; then rm "${LAFNoutfile}" ; fi
 
     #asHeader=$(tput setab 227)$(tput setaf 232)
@@ -298,7 +290,7 @@ ListAllFunctionsNiceUpdate()###USE###
 ListAllFunctions()###USE###
 {
 
-    LAFoutfile=${HOME}/bashscripts/allFunctions.list
+    LAFoutfile=${HOME}/Lynx/allFunctions.list
     cat "$LAFoutfile"
     
 }
@@ -306,7 +298,7 @@ ListAllFunctions()###USE###
 ListAllFunctionsNice()###USE###
 {
 
-    LAFNoutfile=${HOME}/bashscripts/allFunctions.nicelist
+    LAFNoutfile=${HOME}/Lynx/allFunctions.nicelist
     cat "$LAFNoutfile"
     
 }
