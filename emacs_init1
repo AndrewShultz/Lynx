@@ -141,7 +141,8 @@ Version 2016-06-19"
 
 
 
-
+(setq compilation-ask-about-save nil) ;; don't ask to save when compiling, do it auto.
+(setq compilation-read-command nil) ;; Don't require a push of the enter key to compile.
 (global-set-key (kbd "<f5>") 'compile)
 
 (require 'compile)
