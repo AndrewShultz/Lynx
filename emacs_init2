@@ -143,7 +143,7 @@ Version 2016-06-19"
 (global-set-key (kbd "<f5>") 'compile)
 
 (require 'compile)
-(add-hook 'c-mode-hook
+(add-hook 'c++-mode-hook
 	  (lambda ()
 	    (set (make-local-variable 'compile-command)
 		 (let ((file (file-name-nondirectory buffer-file-name)))
@@ -172,3 +172,29 @@ Version 2016-06-19"
     (cons msg code))
   ;; Specify my function (maybe I should have done a lambda function)
   (setq compilation-exit-message-function 'compilation-exit-autoclose)
+
+
+
+;; Insert for loop with F9
+(defun ins-c++-curly ()
+  "Insert {}."
+  (interactive)
+  (setq x (read-string "Loop variable?"))
+  (insert "\nfor(int "x"=0; "x"<; "x"++) {\n\n\n\n}\n\n")
+  (backward-char)
+  (backward-char)
+  (backward-char)
+  (backward-char)
+  (backward-char)
+)  
+(global-set-key (kbd "<f9>") 'ins-c++-curly)
+
+
+;; Auto indent with F8
+(defun autoindent ()
+(interactive)
+  (indent-region (point-min) (point-max))
+  (save-buffer)
+)
+(global-set-key (kbd "<f8>") 'autoindent)
+
