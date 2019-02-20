@@ -193,10 +193,11 @@ Version 2016-06-19"
 (global-set-key (kbd "<f9>") 'ins-c++-curly)
 
 
-;; Auto indent with F8
+;; Auto indent and delete trailing white space with F8
 (defun autoindent ()
 (interactive)
   (indent-region (point-min) (point-max))
+  (delete-trailing-whitespace)
   (save-buffer)
 )
 (global-set-key (kbd "<f8>") 'autoindent)
