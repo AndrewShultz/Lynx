@@ -1203,6 +1203,7 @@ xkb_symbols "pc+us+inet(evdev)+chromebook_m_ralt(overlay)" {
         symbols[Group1]= [               s,               S ]
     };
     key <AC03> {
+        overlay1= <FK11>,
         type= "ALPHABETIC",
         symbols[Group1]= [               d,               D ]
     };

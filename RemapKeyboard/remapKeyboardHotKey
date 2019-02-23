@@ -1,3 +1,4 @@
 #!/bin/bash
 
-xkbcomp -w 0 /home/dulain/bashscripts/xkbmap $DISPLAY
+#xkbcomp -w 0 /home/dulain/bashscripts/xkbmap $DISPLAY
+xkbcomp -w 0 ${HOME}/Lynx/RemapKeyboard/xkbmap $DISPLAY
