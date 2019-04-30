@@ -21,6 +21,8 @@ source ${HOME}/Lynx/gnomeTerminalControl.fun
 source ${HOME}/Lynx/informer.fun
 #all things audio
 source ${HOME}/Lynx/audio.fun
+#all things bluetooth
+source ${HOME}/Lynx/bluetooth.fun
 #all things music
 source ${HOME}/Lynx/music.fun
 #all things related to power off and restart 
