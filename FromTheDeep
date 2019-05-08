@@ -1,0 +1,22 @@
+#!/bin/bash
+
+program=${1##*/}
+prog=${program%%.*}
+
+
+CC="g++ -std=c++11"
+SL="g++ -shared"
+
+ROOTLIB="$(root-config --glibs --libs) -lMinuit -lCore -lTMVA"
+ROOTINC="$(root-config --cflags)"
+
+INCLUDES="${ROOTINC}"
+LIBS="${ROOTLIB}"
+CFLAGS="-Wl,--no-as-needed -fPIC"
+
+DLLSUF="${DllSuf}"
+OBJSUF="${ObjSuf}"
+SRCSUF="${SrcSuf}"
+
+
+echo "${CC} ${program} ${LIBS} ${INCLUDES} ${CFLAGS} -o ${prog}"

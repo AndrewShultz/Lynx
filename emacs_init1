@@ -148,18 +148,12 @@ Version 2016-06-19"
 (require 'compile)
 (add-hook 'c++-mode-hook
 	  (lambda ()
-	    (set (make-local-variable 'compile-command)
-		 (let ((file (file-name-nondirectory buffer-file-name)))
-		   (format "%s %s %s -o %s %s"
-			   (or (getenv "C++") "g++")
-			   (or (getenv "CPPFLAGS")  "-std=c++0x")file
-			   (file-name-sans-extension file)
-			   ;;(or (getenv "CFLAGS") "`root-config --cflags --glibs --libs` `clhep-config --libs` -lgpib")
-			   ;;)))))
-
-			   (or (getenv "CFLAGS") "`root-config --cflags --glibs --libs`  -lgpib -lAnitaAnalysis -lAnitaAnalysisTools -lAnitaCorrelator -lAnitaEvent -lAnitaMagicDisplay -lUCorrelator -lRootFftwWrapper -lRadioScatter")
-			    )))))
-
+	  (set (make-local-variable 'compile-command)
+	  (let ((file (file-name-nondirectory buffer-file-name)))
+	  (let ((dire (file-name-directory buffer-file-name)))
+	  (format "%s"
+	  (or (shell-command-to-string (format "%s %s%s" "${HOME}/Lynx/FromTheDeep" dire file)))
+	  ))))))
 
 
 ;; close the compilation window if
