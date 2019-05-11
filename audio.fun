@@ -81,3 +81,11 @@ SwitchAudio()###USE###
     fi
     
 }
+
+AudioRestart()###USE###
+{
+    pulseaudio --kill
+    pulseaudio --start
+    killall xfce4-volumed
+    xfce4-volumed
+}
