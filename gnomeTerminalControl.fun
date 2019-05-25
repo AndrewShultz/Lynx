@@ -52,7 +52,7 @@ GnomeTerminalChangeToLight() {
 	alias egrep='egrep --color=auto'  
     fi
     if [[ $- == *i* ]]; then
-	PS1="\[$(tput setaf 67)\]\[$(tput bold)\][\@]\[$(tput setaf 65)\] \w $ \[$(tput setaf 232)\]"
+	PS1="\[$(tput setaf 67)\]\[$(tput bold)\][\@] \[$(tput setaf 47)\]<<\[$(tput setaf 167)\]${HOSTNAME%%.*}\[$(tput setaf 47)\]>> \[$(tput setaf 65)\] \w $ \[$(tput setaf 232)\]"
     fi
 }
 
@@ -90,7 +90,7 @@ GnomeTerminalChangeToDark() {
 	alias egrep='egrep --color=auto'
     fi
     if [[ $- == *i* ]]; then
-	PS1="\[$(tput setaf 67)\]\[$(tput bold)\][\@]\[$(tput setaf 65)\] \w $ \[$(tput setaf 36)\]"
+	PS1="\[$(tput setaf 67)\]\[$(tput bold)\][\@] \[$(tput setaf 47)\]<<\[$(tput setaf 167)\]${HOSTNAME%%.*}\[$(tput setaf 47)\]>> \[$(tput setaf 65)\] \w $ \[$(tput setaf 36)\]"
     fi
 }
 

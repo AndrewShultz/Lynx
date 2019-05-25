@@ -37,6 +37,9 @@ source ${HOME}/Lynx/UW-M.fun
 #things for stretching
 source ${HOME}/Lynx/workout.fun
 
+#things for Laptop "DuLain"
+source ${HOME}/Lynx/dulain.fun
+
 if [ "$BRIGHT_ENV" -eq "1" ] 
 then
     GnomeTerminalChangeToLight

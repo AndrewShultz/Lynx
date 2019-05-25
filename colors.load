@@ -38,7 +38,7 @@ colors[15]="\033[48;5;196m\033[38;5;154m"
 clr="\033[0m"
 
 if [[ $- == *i* ]]; then
-    PS1="\[$(tput setaf 67)\]\[$(tput bold)\][\@]\[$(tput setaf 65)\] \w $ \[$(tput setaf 209)\]"
+    PS1="\[$(tput setaf 67)\]\[$(tput bold)\][\@] \[$(tput setaf 47)\]<<\[$(tput setaf 167)\]${HOSTNAME%%.*}\[$(tput setaf 47)\]>> \[$(tput setaf 65)\] \w $ \[$(tput setaf 36)\]"
 fi
 
 # enable color support of ls and also add handy aliases
