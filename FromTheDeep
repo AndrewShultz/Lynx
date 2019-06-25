@@ -2,7 +2,9 @@
 
 program=${1##*/}
 prog=${program%%.*}
+suff=${program##*.}
 
+echo "Suffix: $suff"
 
 CC="g++ -std=c++11"
 SL="g++ -shared"
@@ -13,6 +15,14 @@ ROOTINC="$(root-config --cflags)"
 INCLUDES="${ROOTINC}"
 LIBS="${ROOTLIB}"
 CFLAGS="-Wl,--no-as-needed -fPIC"
+
+if [[ "$suff" == "C" || "$suff" == "c" || "$suff" == "cc" ]]
+then
+    INCLUDES+=`${HOME}/Lynx/Serf-I "${1}"`
+    #${HOME}/Lynx/Serf-I "${1}"
+    LIBS+=`${HOME}/Lynx/Serf-L "${1}"`
+fi
+
 
 DLLSUF="${DllSuf}"
 OBJSUF="${ObjSuf}"
