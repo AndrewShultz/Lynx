@@ -5,7 +5,7 @@ inc=" "
 while read line; do
     if [[ "$line" =~ "SERF:" || "$line" =~ "SERF-L:"  ]]
     then
-	inc+="-L"`echo "$line" | sed -e "s^.*: ^^g"`" "
+	inc+="-L"`eval echo "$line" | sed -e "s^.*: ^^g"`" "
     fi
 done <$1
 
