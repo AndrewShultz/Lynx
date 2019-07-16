@@ -19,14 +19,13 @@ void Translator::run() {
 
   QProcess process;
   string cmd = homedir + (string)"/Lynx/YouTubeDLer/gettitle " + furl;
-  std::cout << "CMD: " << cmd << std::endl;
+  //std::cout << "CMD: " << cmd << std::endl;
   process.start(cmd.c_str());
   //while(!process.waitForStarted());
   //bool retval = false;
   //QByteArray buffer;
   process.waitForFinished(-1);
   //while(!process.waitForFinished()) printf("PROC: %i \n",process.waitForFinished());
-  std::cout << "hello from worker thread " << std::endl;
   resultReady(process.readAllStandardOutput());
   process.close();
   

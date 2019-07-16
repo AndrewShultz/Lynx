@@ -41,10 +41,13 @@ class Downloader : public QThread
   string fout;
   int fID;
 
+  void run();
+
  private:
+
+  bool debug;
   
   QProcess process;
-  void run();
   
  private slots:
   void runupdate();
@@ -52,6 +55,7 @@ class Downloader : public QThread
   void resultReady(const int &id, const char* song);
   void supdate(const char* percent, const int &id);
   void successDownload();
+  void startingDownload();
     
 };
 

@@ -52,7 +52,10 @@ class FileEntry: public QObject {
     void setName(const char* song);
     void downloadupdate(const char* percent, const int &id);
     void downloadsuccessupdate();
-
+    void downloadingStatus();
+ signals:
+    void startDownload();
+    
  private:
     string foutdir;
     

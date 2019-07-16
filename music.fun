@@ -90,8 +90,9 @@ HandleMusic()###USE###
 	echo "USAGE OPTIONS (1 ARGUMENT ONLY):"
 	echo "0: Move to mp3 player"
 	echo "1: Move to usb stick"
-	echo "2: Move to computer internal sd card"
-	echo "3: Move to finished directory"
+	echo "2: Move to computer external sd card"
+	echo "3: Move to S8 (must be mounted with S8Mount[give permission],S8Unmount,S8Mount)"
+	echo "4: Move to finished directory"
 	cd $P_W_D
 	return
     else
@@ -106,11 +107,12 @@ HandleMusic()###USE###
     #ls
 
     cmd=cp
-    if [[ "$1" < "0" || "$1" > "3" ]] ; then echo "Not a valid option. " ; cd $P_W_D ; return ; fi
+    if [[ "$1" < "0" || "$1" > "4" ]] ; then echo "Not a valid option. " ; cd $P_W_D ; return ; fi
     if [[ "$1" == "0" ]] ; then	movedir='/media/dulain/Clip Sport/Music/NewMusic/' ; fi
     if [[ "$1" == "1" ]] ; then	movedir='/media/dulain/USB20FD/All Music/' ; fi
     if [[ "$1" == "2" ]] ; then	movedir='/media/dulain/9016-4EF8/Music/' ; fi
-    if [[ "$1" == "3" ]] ; then	movedir='/home/dulain/Music/ToArchive/' ; cmd=mv ; fi
+    if [[ "$1" == "3" ]] ; then	movedir='/home/dulain/mount/Phone/Music/' ; cmd="cp" ; fi
+    if [[ "$1" == "4" ]] ; then	movedir='/home/dulain/Music/ToArchive/' ; cmd=mv ; fi
 
     echo "Command = $cmd"
     echo "End Directory = $movedir"

@@ -3,27 +3,32 @@
 
 FileEntry::FileEntry(string outdir, QTableWidget *parent, string link, int inid) {
 
-  debug = true;
+  debug = false;
 
   foutdir = outdir;
   flink = link;
   fdownloaded = false;
   fstarted = false;
   id = inid;//parent->rowCount()-1;
-  printf("ID: %i \n",id);
-  
+  //printf("ID: %i \n",id);
+
   translator = new Translator();
   translator->setURL(link);
   translator->setID(id);
   connect(translator, &Translator::resultReady, this, &FileEntry::setName);
 
   downloader = new Downloader();
+  //connect(this, &FileEntry::startDownload, this, &FileEntry::downloadingStatus);
+  connect(downloader, &Downloader::startingDownload, this, &FileEntry::downloadingStatus);
+  connect(this, &FileEntry::startDownload, downloader, &Downloader::run);
+  connect(downloader, &Downloader::supdate, this, &FileEntry::downloadupdate);
+  connect(downloader, &Downloader::successDownload, this, &FileEntry::downloadsuccessupdate);
 
   statustext = new QLineEdit();
   statustext->setReadOnly(true);
   statustext->setText("Loading...");
   statustext->setStyleSheet("QWidget {background-color: #333333;color: #fffff8;} ");
-  
+
   progressBar = new QProgressBar();
   progressBar->setRange(0, 100);
   progressBar->setValue(0);
@@ -37,7 +42,7 @@ FileEntry::FileEntry(string outdir, QTableWidget *parent, string link, int inid)
   songtext->setText("");
   songtext->setStyleSheet("QWidget {background-color: #333333;color: #fffff8;} ");
   connect(songtext,&TitleHolder::updateNameText,this,&FileEntry::updateName);
-  
+
   //parent->setRowCount(id+1);
   if((id+1)>parent->rowCount()) parent->insertRow(id);
   parent->setCellWidget(id,0,songtext);
@@ -47,7 +52,7 @@ FileEntry::FileEntry(string outdir, QTableWidget *parent, string link, int inid)
   translator->start();
 
   //checkExistingFiles();
-  
+
 }
 
 FileEntry::~FileEntry() {
@@ -71,26 +76,33 @@ void FileEntry::updateName(const TitleHolder *tname) {
     string newstr = foutdir + fname + (string)".mp3";
     rename(oldstr.c_str(),newstr.c_str());
   }
-  
+
+}
+
+void FileEntry::downloadingStatus() {
+  //if(!fdownloaded) {
+    statustext->setText("Dowloading");
+    //this->update();
+    //}
 }
 
 void FileEntry::run() {
   fstarted = true;
   if(!fdownloaded) {
-    string outstr = foutdir + fname;
-    statustext->setText("Dowloading");
+    //statustext->setText("Dowloading");
     //downloader = new Downloader(flink,outstr,id);
+    string outstr = foutdir + fname;
     downloader->setURL(flink);
     downloader->setID(id);
     downloader->setOUT(outstr);
-    connect(downloader, &Downloader::supdate, this, &FileEntry::downloadupdate);
-    connect(downloader, &Downloader::successDownload, this, &FileEntry::downloadsuccessupdate);
-    downloader->start();
+    statustext->setText("Dowloading");
+    emit startDownload();
+    //downloader->start();
   }
 }
 
 void FileEntry::downloadupdate(const char* percent, const int &id) {
-  printf("ID: %i \t PERCENT: %.3f \n",id,atof(percent));
+  //printf("ID: %i \t PERCENT: %.3f \n",id,atof(percent));
   progressBar->setValue(atof(percent));
 }
 
@@ -106,9 +118,10 @@ void FileEntry::downloadsuccessupdate() {
   else {
     songtext->setStyleSheet("QWidget {background-color: #00ff00;color: #000000;} ");
     statustext->setStyleSheet("QWidget {background-color: #00ff00;color: #000000;} ");
-    statustext->setText("Dowloaded");
+    statustext->setText("Downloaded");
     fdownloaded = true;
   }
+  fstarted = false;
 }
 
 bool FileEntry::doesItExist(const std::string& name) {
@@ -136,7 +149,7 @@ void FileEntry::checkExistingFiles() {
       fname = tempname;
       fdownloaded = true;
     }
-    //printf("%s \t %s \t %i \n",entry->d_name,fname.c_str(),ComputeLevenshteinDistance(fname,temp));    
+    //printf("%s \t %s \t %i \n",entry->d_name,fname.c_str(),ComputeLevenshteinDistance(fname,temp));
   }
 
   closedir(dir);
@@ -149,12 +162,12 @@ double FileEntry::getLDist(const char *s, const char *t) {
   int i,j,m,n,temp,tracker;
   m = strlen(s);
   n = strlen(t);
-  
+
   for(i=0;i<=m;i++)
     d[0][i] = i;
   for(j=0;j<=n;j++)
     d[j][0] = j;
-  
+
   for (j=1;j<=m;j++)
     {
       for(i=1;i<=n;i++)
@@ -171,10 +184,10 @@ double FileEntry::getLDist(const char *s, const char *t) {
 	  d[i][j] = MIN(temp,(d[i-1][j-1]+tracker));
 	}
     }
-  printf("the Levinstein distance is %d\n",d[n][m]);
+  //printf("the Levinstein distance is %d\n",d[n][m]);
   //return d[n][m];
 
   if(m>n) return (1.0-double(d[n][m])/double(m));
   else return (1.0-double(d[n][m])/double(n));
-  
+
 }
