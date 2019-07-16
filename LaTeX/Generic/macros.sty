@@ -1,0 +1,97 @@
+
+\def\lp{\left(}
+\def\rp{\right)}
+
+\newcommand{\eqq}{&=}
+\newcommand{\eq}{\;=\;}
+\newcommand{\T}[1]{\text{#1}}
+\newcommand{\B}[1]{\textbf{#1}}
+\newcommand{\eae}{&=&}
+\newcommand{\nnp}{\nonumber\\}
+\newcommand{\nn}{\nonumber}
+\newcommand{\vbar}{\mathop{\ooalign{\hfil$V$\hfil\cr\kern0.08em--\hfil\cr}}\nolimits}
+
+\newcommand{\thedate}{\today}
+
+\newcommand\asorange{FFC50}
+\newcommand\aspink{EEA0A0}
+\newcommand\aspeach{FFC564}
+\newcommand\aslavender{FF96C8} 
+\newcommand\asgreen{64FF64}
+
+\definecolor{asgreen}{rgb}{0.2, 0.7, 0.2}
+\definecolor{asred}{rgb}{1.0, 0.0, 0.2}
+\definecolor{aselecgreen}{rgb}{0.4, 1.0, 0.2} %needs work
+\definecolor{aspink}{rgb}{0.8, 0.1, 0.1}
+
+\let\svitemize\itemize
+\let\svenditemize\enditemize
+\let\olditem\item
+\def\newpar{\vfill}
+
+\newcommand\stretchon{
+  \renewcommand\item{\olditem\newpar}
+  \renewenvironment{itemize}{\svitemize}{\svenditemize\newpar}
+}
+
+\newcommand{\plotsWithWords}[5]{
+  \begin{tikzpicture}
+    \node[anchor=south west,inner sep=0] (image) at (0,0) {
+      \includegraphics[page=#1,width=#2\textwidth]{#5}
+    };
+    \begin{scope}[x={(image.south east)},y={(image.north west)}]
+      \node[align=left,red,ultra thick, opacity=#3] at (0.5,0.5) {#4};
+    \end{scope}
+  \end{tikzpicture}
+}
+
+\newcommand{\plotsWithTwoLinesAtTop}[6]{
+\begin{tikzpicture}
+\node[anchor=south west,inner sep=0] (image) at (0,0) {
+\includegraphics[page=#1,width=#2\textwidth]{#6}
+};
+\begin{scope}[x={(image.south east)},y={(image.north west)}]
+\node[align=left,red,ultra thick, opacity=#3] at (0.5,0.85) {#4};
+\node[align=left,red,ultra thick, opacity=#3] at (0.4,0.93) {#5};
+\end{scope}
+\end{tikzpicture}
+}
+
+\newcommand{\sumlimits}[2]{
+  \sum\limits^{#1}_{#2}
+}
+
+\newcommand{\asframe}[2]{
+  \frame[fragile=singleslide] {
+    \frametitle{#1}
+    #2
+  }
+}
+
+\newcommand{\cenmini}[1]{
+\begin{center}
+\begin{minipage}{0.8\textwidth}
+#1
+\end{minipage}
+\end{center}
+}
+
+\newcommand{\rarrw}{\hspace{1em}$\rightarrow$\hspace{1em}}
+
+\NewEnviron{SegBox}[3]{%
+  \begin{center}
+%    \hspace{-1em}
+    \colorbox[HTML]{#1}{
+      \begin{minipage}{\dimexpr\columnwidth-4\fboxsep\relax}
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0] (image) at (0,0) {
+            {\BODY}
+          };
+          \begin{scope}[x={(image.south east)},y={(image.north west)}]
+            \node[scale=2.0,align=left,red,ultra thick, opacity=#2] at (0.5,0.5) {#3};
+          \end{scope}
+        \end{tikzpicture}
+      \end{minipage}
+    }
+  \end{center}
+}

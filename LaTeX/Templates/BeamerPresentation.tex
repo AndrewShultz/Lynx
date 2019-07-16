@@ -1,0 +1,30 @@
+
+\documentclass[aspectratio=54,10pt]{beamer}
+%\usetheme{Gentleman2}
+\usetheme{KU}
+%\usetheme{UNLDARK}
+\usepackage{genericpresentation}
+\usepackage{makecell}
+\usepackage{hhline}
+\usepackage{subcaption}
+
+\setbeamersize{text margin left=5pt,text margin right=5pt}
+
+\titlegraphic{\centering{\includegraphics[height=2cm]{ku-logo.png}}}
+\author{\textbf{Andrew Shultz}}
+\title{DasTitle}
+
+\begin{document}
+
+\stretchon
+
+\let\otp\titlepage
+\renewcommand{\titlepage}{\otp\addtocounter{framenumber}{-1}}
+\begin{frame}[plain]
+ \titlepage
+\end{frame}
+
+
+\include{p1}
+
+\end{document}

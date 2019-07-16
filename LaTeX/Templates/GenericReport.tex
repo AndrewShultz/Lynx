@@ -1,0 +1,60 @@
+%\documentclass[12pt]{article}
+\documentclass[hidelinks,12pt,single,oneside]{ASReport}
+%\documentclass[12pt,single,oneside]{mech488paper}
+\usepackage{macros}
+\usepackage{listings}
+
+%\usepackage{fontspec}
+%\setmainfont{ASFont}
+
+\AtBeginDocument{\renewcommand{\bibname}{References}}
+%\renewcommand\refname{References}
+
+\title{Das Title}
+\aauthors{\textbf{Andrew Shultz}}
+\university{University of Kansas}
+\adviser{\textbf{Dr. Advisor} \\ Advisor of Physics \\ University of Kansas}
+\dept{Physics and Astronomy}
+\class{A Class}
+\classdesc{Title of Class}
+%\duedate{April 28$^\text{th}$, 2017}
+
+%\newcommand{\eq}[0]{\;=\;}
+%\newcommand{\eqq}[0]{&=&}
+\creflabelformat{equation}{#2#1#3}
+\lstset{numbers=left,xleftmargin=4em,frame=single,framexleftmargin=0.0em}
+
+\frenchspacing
+
+%useage:
+%\begin{lstlisting}
+%\end{lstlisting}
+\lstset { %
+    language=C++,
+    backgroundcolor=\color{black!5}, % set backgroundcolor
+    basicstyle=\footnotesize,% basic font setting
+    breaklines=true,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+
+\begin{document}
+
+\frontmatter
+
+\maketitle
+%\include{abstract}
+\begin{KeepFromToc}
+\tableofcontents
+\thispagestyle{empty}
+\pagestyle{empty}
+\addtocontents{toc}{\protect\thispagestyle{empty}}
+\end{KeepFromToc}
+
+\mainmatter
+
+\input{intro}
+
+%\appendix
+%\include{append}
+
+\end{document} 

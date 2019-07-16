@@ -30,16 +30,16 @@ ts-switchpages()###USE###
     mv $f1 $tfile1
     mv $f2 $f1
     mv $tfile1 $f2
-    
+
 }
 
 ts-update()###USE###
 {
-    
+
     tempfile=temp.tex
     Pwd=`pwd`
     file=`echo $Pwd | sed -e "s^.*/^^g"`.tex
-    cat $file > $tempfile    
+    cat $file > $tempfile
     incs=(`cat $file | grep "\include{"`)
     page=1
     pages=
@@ -47,7 +47,7 @@ ts-update()###USE###
     backupdir=".backup"
 
     if [ ! -d "$backupdir" ] ; then mkdir "$backupdir" ; fi
-    
+
     for inc in ${incs[*]}
     do
 	if [[ ! $inc == %* ]]
@@ -73,7 +73,7 @@ ts-update()###USE###
     #PM 5 "These changes will be made, proceed? (y/n/q)"
     echo -e "\033[38;5;82m\033[48;5;16mThese changes will be made, proceed? (y/n/q)"
 
-    
+
     while true ; do
 	read -n1 -s yn
 	case $yn in
@@ -93,7 +93,7 @@ ts-update()###USE###
 
     #PM 6 "Executing changes"
     echo -e "\033[38;5;211m\033[48;5;16mExecuting changes"
-    
+
     sed -i "/end{document}/d" $tempfile
 
     page=1
@@ -108,21 +108,20 @@ ts-update()###USE###
 
     cat $tempfile > $file
     if [ -f "$tempfile" ] ; then rm "$tempfile" ; fi
-    
+
 }
 
-ts-start()###USE###
-{
+ts-start2() {
 
     Pwd=`pwd`
     wd=$Pwd/$1
     num=`echo "$wd" | grep -o "/" | wc -l`
     file=`echo $wd | cut -d"/" -f${num}`
     openfiles="${file}.tex"
-    
+
     if [ -f "${file}.tex" ]
     then
-	files=(`cat "${file}.tex" | grep "input{\|include{" | sed -e "s^input{^^g" -e "s^include{^^g" -e "s^}^^g" -e "s^[\]^^g"`)	
+	files=(`cat "${file}.tex" | grep "input{\|include{" | sed -e "s^input{^^g" -e "s^include{^^g" -e "s^}^^g" -e "s^[\]^^g"`)
     fi
 
     if [ -z "$files" ]
@@ -139,11 +138,11 @@ ts-start()###USE###
 	    temple=`echo $ite | sed -e "s^.tex^^g" -e "s^${HOME}/LaTeXDocs/usercode/templates/^^g"`
 	    echo "$cnt: $temple"
 	    ((cnt++))
-	    
+
 	done
 
 	read cho
-	
+
 	cp "${temples[$cho]}" "./${file}.tex"
 	echo "" > p1.tex
 	echo "% !TeX root = ${file}" >> p1.tex
@@ -151,16 +150,93 @@ ts-start()###USE###
 	echo "\asframe{Introduction}{" >> p1.tex
 	echo "{\let\clearpage\relax \chapter{Introduction}}" >> p1.tex
 	openfiles+=" p1.tex"
-	
+
     else
-	
+
 	for ifile in ${files[*]}
 	do
 	    openfiles+=" $ifile.tex"
 	done
+
+    fi
+
+    texstudio --start-always $openfiles
+
+}
+
+ts-start()###USE###
+{
+
+    output=(`grep -m1 -l -d skip "documentclass" ./*`)
+    if [[ "${#output[*]}" > "1" ]];
+    then
+	echo "Cannot determine main file:"
+	for ioutput in "${output[@]}"
+	do
+	    printf "%s\n" "${ioutput%%:*}"
+	done
+	return
+    fi
+    mainfile="${output%%:*}"
+    openfiles="$mainfile"
+
+    if [ -f "$mainfile" ]
+    then
+	echo "MainFile: $mainfile"
+	files=(`grep "\include{" "$mainfile"`)
+	#echo "${files[*]}"
+	for file in "${files[@]}"
+	do
+	    #echo ${file} | sed -e "s^.*{^^g" -e "s^}.*^^g"
+	    openfile=`echo ${file} | sed -e "s^.*{^^g" -e "s^}.*^^g"`".tex"
+	    if [ -f "$openfile" ]
+	    then
+		openfiles+=" $openfile"
+	    fi
+
+	done
+    else
+
+	cnt=0
+	temples=(`ls ${HOME}/Lynx/LaTeX/Templates/*`)
+	PM 0 "Empty project... RALLYING..."
+	PM 0 "Pick project type:"
+
+	for temple in "${temples[@]}"
+	do
+
+	    PM 1 "$cnt: ${temple##*/}"
+	    ((cnt++))
+
+	done
+
+	read cho
+
+	PM 0 "What should the main file be called?"
+	read mainfilename
+
+	cp "${temples[$cho]}" "./${mainfilename}.tex"
+	cp "${HOME}/Lynx/LaTeX/Generic/macros.sty" ./
+	openfiles="${mainfilename}.tex"
+	
+	if [[ "${temples[$cho]##*/}" == "GenericReport.tex" ]]
+	then
+	    cat "${HOME}/Lynx/LaTeX/Generic/intro.tex" | sed -e "s^???TITLE???^$mainfilename^g" > ./intro.tex
+	    cp "${HOME}/Lynx/LaTeX/Generic/genericdocument.sty" ./
+	    cp "${HOME}/Lynx/LaTeX/Classes/ASReport.cls" ./
+	    openfiles+=" intro.tex"
+	fi
+	if [[ "${temples[$cho]##*/}" == "BeamerPresentation.tex" ]]
+	then
+	    cat "${HOME}/Lynx/LaTeX/Generic/p1.tex" | sed -e "s^???TITLE???^$mainfilename^g" > ./p1.tex
+	    cp "${HOME}/Lynx/LaTeX/Generic/genericpresentation.sty" ./
+	    openfiles+=" p1.tex"
+	    #cp "${HOME}/Lynx/LaTeX/Generic/p1.tex" ./
+	fi
 	
     fi
-    
+
+    #echo "Opening: $openfiles"
     texstudio --start-always $openfiles
     
 }
