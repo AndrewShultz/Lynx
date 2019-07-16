@@ -1,0 +1,17 @@
+
+#First change the DRIVER define in ybacklight.c to correct driver. See: /sys/class/backlight/ to figure out driver.
+
+#then use:
+
+sudo visudo
+
+#then add as last line:
+
+'''USERNAME''' ALL=(ALL) NOPASSWD: /full/path/ybacklight
+
+Lastly, add commands:
+
+/full/path/ybacklight -inc 5
+/home/andrew/Software/c++/ybacklight/src/ybacklight -dec 5
+
+to hotkeys (keyboard settings).
