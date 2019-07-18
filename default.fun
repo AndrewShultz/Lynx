@@ -323,7 +323,7 @@ ptpecho()###USE###
 
 BufferCacheClearance()###USE###
 {
-    sudo /home/dulain/bashscripts/CacheClearance/clearcache
+    echo 3 > sudo /proc/sys/vm/drop_caches
 }
 
 ZipIt()###USE###
