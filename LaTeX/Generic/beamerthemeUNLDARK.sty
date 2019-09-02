@@ -1,0 +1,137 @@
+\ProvidesPackageRCS $Header: /home/vedranm/bitbucket/beamer/base/themes/theme/beamerthemeUNLTheme.sty,v 1.10 2004/10/07 20:53:10 bourke Exp $
+
+\newdimen\beamer@sidebarwidth
+\newdimen\beamer@headheight
+\usebeamerfont{fametitle}
+\beamer@sidebarwidth=0.0\baselineskip
+\beamer@headheight=1.1\baselineskip
+\reset@font
+
+\def\beamer@lefttext{left}
+
+\DeclareOptionBeamer{hideothersubsections}[]{\beamer@nav@subsectionstyle{show/show/hide}}
+\DeclareOptionBeamer{hideallsubsections}[]{\beamer@nav@subsectionstyle{hide}}
+
+\DeclareOptionBeamer{width}{\beamer@sidebarwidth=#1}
+\DeclareOptionBeamer{height}{\beamer@headheight=#1}
+\DeclareOptionBeamer{left}{\def\beamer@sidebarside{left}}
+\DeclareOptionBeamer{right}{\def\beamer@sidebarside{right}}
+\ExecuteOptionsBeamer{left}
+\ProcessOptionsBeamer
+
+\mode<beamer>
+
+%\setbeamercolor{titlelike}{fg=black,bg=UNL@Scarlet} %
+\setbeamercolor{sidebar}{fg=UNL@Cream,bg=black} % Frame Title
+\setbeamercolor{normal text}{fg=UNL@Cream,bg=black} % Body
+%\setbeamercolor{frametitle}{fg=white,bg=UNL@Scarlet}           %
+%\setbeamercolor{title in sidebar}{fg=UNL@Cream}      %
+%\setbeamercolor{author in sidebar}{fg=UNL@Cream}    %
+%\setbeamercolor{section in sidebar shaded}{fg=UNL@Cream}
+%\setbeamercolor{subsection in sidebar shaded}{fg=UNL@Cream}
+
+%\setbeamertemplate{blocks}[rounded]{shadow=true}
+
+%\setbeamercolor{block title}{fg=white,bg=black}
+%\setbeamercolor{block body}{fg=UNL@VeryLightGrey,bg=black}
+
+% Set the UNL logo, UNL.pdf must be in the latex path or working directory
+%\setbeamercolor{logo}{fg=black,bg=white}
+%\logo{\includegraphics[height=0.55cm]{UNL.pdf}}
+
+\mode
+<all>
+
+
+% We declare the main color theme: Scarlet & Cream
+\definecolor{UNL@Scarlet}{RGB}{140,17,17}
+% Alternate UNL@Reds: 204,0,0 (unl.edu) <--seems to be the best
+%                     240,7,46 (logo)
+%                     255,25,25 (original)
+%                     140,17,17 ("scarlet")
+\definecolor{UNL@Cream}{RGB}{245,240,219}
+%Cream          245  240  219
+%Cream2         245  255  250 - Whitest
+%Dairy Cream    249  228  188 - more peachy
+%Cream Brulee   255  229  160 - peach
+%Cream Can      245  200   92 - Almost a peach
+%Coconut Cream  248  247  220 - More white
+\definecolor{UNL@DarkGrey}{RGB}{35,35,35}
+\definecolor{UNL@Grey}{RGB}{100,100,100}
+\definecolor{UNL@LightGrey}{RGB}{200,200,200}
+\definecolor{UNL@VeryLightGrey}{RGB}{225,225,225}
+
+% We enforce conformity at UNL!
+% so we override example (greenish) and alerted (redish)
+\setbeamercolor{block title example}{fg=white,bg=black} %
+%\setbeamercolor{block body example}{fg=block body.fg,bg=block body.bg} %
+\setbeamercolor{block title alerted}{fg=block title.fg,bg=block title.bg} %
+\setbeamercolor{block body alerted}{fg=block body.fg,bg=block body.bg} %
+\setlength{\parskip}{.25cm}
+%\def\mathfamilydefault{\rmdefault}\beamer@sansmathfalse
+\usefonttheme[onlymath]{serif}
+\beamertemplatetheoremsunnumbered  %This suppresses theorem numbers
+
+
+% ADD PAGE NUMBERS AND GET RID OF JUNK AT BOTTOM
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline} {
+  \insertframenumber\,/\,\inserttotalframenumber
+}
+
+\AtBeginDocument{
+  \pgfdeclareverticalshading{beamer@topshade}{\paperwidth} {
+    color(0pt)=(white);
+    color(4pt)=(bg!500!white)
+  }
+  \pgfdeclareverticalshading{beamer@topshadesidebarcoverwhite}{\paperwidth} {
+%    color(0pt)=(black);
+%    color(4pt)=(black)
+    color(0pt)=(bg);
+    color(4pt)=(white!500!bg)
+%    color(0pt)=(white);
+%    color(4pt)=(white)
+  }
+}
+
+\ifdim\beamer@headheight>0pt
+\setbeamercolor*{frametitle}{parent=sidebar}
+\defbeamertemplate*{frametitle}{sidebar theme} {
+  \nointerlineskip
+  %\vskip4pt
+  \vskip-\beamer@headheight
+  \vbox to \beamer@headheight{
+    \vfil
+        {\usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\insertframetitle\par}
+        {\usebeamercolor[fg]{framesubtitle}\usebeamerfont{framesubtitle}\insertframesubtitle\par}
+        \vbox{}
+        \vskip-1em
+        \vfil
+  }
+}
+\defbeamertemplate*{headline}{sidebar theme} {
+  \begin{beamercolorbox}[wd=\paperwidth]{frametitle}
+    \ifx\beamer@sidebarside\beamer@lefttext
+    \else
+    \hfill
+    \fi
+    \ifdim\beamer@sidebarwidth>0pt
+    \usebeamercolor[bg]{logo}
+    \vrule width\beamer@sidebarwidth height \beamer@headheight
+    \hskip-\beamer@sidebarwidth
+    \hbox to \beamer@sidebarwidth{\hss\vbox to
+      \beamer@headheight{\vss\hbox{\color{fg}\insertlogo}\vss}\hss}
+    \else
+    \vrule width0pt height \beamer@headheight
+    \fi
+  \end{beamercolorbox}
+}
+\fi
+  
+\addtobeamertemplate{headline}{} {
+  \vskip-13.2pt
+  \hskip\beamer@sidebarwidth\pgfuseshading{beamer@topshadesidebarcoverwhite}
+  \vskip13.2pt
+  \hskip\beamer@sidebarwidth\pgfuseshading{beamer@topshade}
+  \vskip-2.5pt
+}

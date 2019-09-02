@@ -1,0 +1,289 @@
+
+% BEGIN sidebar dimension setup
+\newdimen\beamer@sidebarwidth
+\newdimen\beamer@headheight
+\usebeamerfont{fametitle}
+\beamer@sidebarwidth=0.0\baselineskip
+\beamer@headheight=1.0\baselineskip
+\reset@font
+
+\def\beamer@lefttext{left}
+
+% Package options
+\DeclareOptionBeamer{hideothersubsections}[]{\beamer@nav@subsectionstyle{show/show/hide}}
+\DeclareOptionBeamer{hideallsubsections}[]{\beamer@nav@subsectionstyle{hide}}
+\DeclareOptionBeamer{width}{\beamer@sidebarwidth=#1}
+\DeclareOptionBeamer{height}{\beamer@headheight=#1}
+\DeclareOptionBeamer{left}{\def\beamer@sidebarside{left}}
+\DeclareOptionBeamer{right}{\def\beamer@sidebarside{right}}
+\ExecuteOptionsBeamer{left}
+\ProcessOptionsBeamer
+
+% Default mode (<presentation> encompasses <beamer>, <handout>, and <trans> (transparencies))
+\mode<beamer>
+
+\usecolortheme{UNL2}
+
+% All Beamer Boxes will be rounded with a drop shadow
+\useinnertheme[shadow=true]{rounded}
+
+% if head height is 0pt, use default frame title
+\ifdim\beamer@headheight>0pt
+  \setbeamercolor*{frametitle}{parent=sidebar}
+  \defbeamertemplate*{frametitle}{sidebar theme} {
+    \nointerlineskip
+    \vskip-\beamer@headheight
+    \vbox to \beamer@headheight{
+      \vfil
+%      \leftskip=-\beamer@leftmargin
+%      \advance\leftskip by0.3cm
+%      \rightskip=-\beamer@rightmargin
+%      \advance\rightskip by0.3cm plus1fil
+      {\usebeamercolor[fg]{frametitle}\usebeamerfont{frametitle}\insertframetitle\par}
+      {\usebeamercolor[fg]{framesubtitle}\usebeamerfont{framesubtitle}\insertframesubtitle\par}
+      \vbox{}
+      \vskip-1em
+      \vfil
+    }
+  }
+
+
+
+\defbeamertemplate*{title page}{customized}[1][] {
+  \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\hskip.8cm
+%  \bigskip
+  \vspace{-0.09\baselineskip}
+  \begin{beamercolorbox}[wd=\paperwidth]{frametitle2}
+  \end{beamercolorbox}
+  \vspace{-0.43\baselineskip}
+  \begin{beamercolorbox}[wd=\paperwidth]{frametitle}
+    \usebeamerfont{title}\inserttitle
+    \vspace{0.5em}
+    %0.25\baselineskip
+  \end{beamercolorbox}
+  \begin{beamercolorbox}[wd=\paperwidth]{frametitle2}
+  \end{beamercolorbox}
+  \usebeamerfont{subtitle}\usebeamercolor[fg]{UNL@MainBG}\insertsubtitle\par
+  \bigskip
+  \usebeamerfont{author}\insertauthor\par
+  \usebeamerfont{institute}\insertinstitute\par
+  \usebeamerfont{date}\insertdate\par
+
+}
+
+
+
+\defbeamertemplate*{headline}{sidebar theme} {
+    \begin{beamercolorbox}[wd=\paperwidth]{frametitle}
+      \ifx\beamer@sidebarside\beamer@lefttext
+      \else
+        \hfill
+      \fi
+      \ifdim\beamer@sidebarwidth>0pt
+        \usebeamercolor[bg]{logo}
+        \vrule width\beamer@sidebarwidth height \beamer@headheight
+        \hskip-\beamer@sidebarwidth
+        \hbox to \beamer@sidebarwidth{\hss\vbox to
+          \beamer@headheight{\vss\hbox{\color{fg}\insertlogo}\vss}\hss}
+      \else
+        \vrule width0pt height \beamer@headheight
+      \fi
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[wd=\paperwidth]{frametitle2}
+      \ifx\beamer@sidebarside\beamer@lefttext
+      \else
+        \hfill
+      \fi
+      \ifdim\beamer@sidebarwidth>0pt
+        \usebeamercolor[bg]{logo}
+        \vrule width\beamer@sidebarwidth height \beamer@headheight
+        \hskip-\beamer@sidebarwidth
+        \hbox to \beamer@sidebarwidth{\hss\vbox to
+          \beamer@headheight{\vss\hbox{\color{fg}\insertlogo}\vss}\hss}
+      \else
+        \vrule width0pt height 0.3\baselineskip
+      \fi
+    \end{beamercolorbox}
+  }
+\fi
+
+
+\def\beamer@sidebarformat#1#2#3{
+  \begin{beamercolorbox}[wd=\beamer@sidebarwidth,leftskip=#1,rightskip=1ex plus1fil,vmode]{#2}
+    \vbox{}
+    #3\par
+    \vbox{}
+    \vskip-1.5ex
+  \end{beamercolorbox}
+}
+
+\defbeamertemplate*{section in sidebar}{sidebar theme} {
+  \vbox{
+    \vskip1ex
+    \beamer@sidebarformat{3pt}{section in sidebar}{\insertsectionhead}
+  }
+}
+
+\defbeamertemplate*{section in sidebar shaded}{sidebar theme} {
+  \vbox{
+    \vskip1ex
+    \beamer@sidebarformat{3pt}{section in sidebar shaded}{\insertsectionhead}
+  }
+}
+
+\defbeamertemplate*{subsection in sidebar}{sidebar theme} {
+  \beamer@sidebarformat{5pt}{subsection in sidebar}{\insertsubsectionhead}
+}
+
+\defbeamertemplate*{subsection in sidebar shaded}{sidebar theme} {
+  \beamer@sidebarformat{5pt}{subsection in sidebar shaded}{\insertsubsectionhead}
+}
+
+% Side bar
+\ifdim\beamer@sidebarwidth>0pt
+  \setbeamersize{sidebar width \beamer@sidebarside=\beamer@sidebarwidth}
+  \defbeamertemplate*{sidebar \beamer@sidebarside}{sidebar theme} {
+    \beamer@tempdim=\beamer@sidebarwidth
+    \advance\beamer@tempdim by -6pt
+
+    %Insert title into sidebar. Isn't this a bit redundant
+%    {\usebeamerfont{title in sidebar}
+%      \vskip1.5em
+%      \hskip3pt
+%      \usebeamercolor[fg]{title in sidebar}
+%      \insertshorttitle[width=\beamer@tempdim,center,respectlinebreaks]\par
+%      \vskip1.25em
+%    }
+
+    %Insert authors into sidebar. Isn't this a bit redundant and arrogant?
+%    {
+%      \vskip1.5em
+%      \usebeamercolor[fg]{author in sidebar}
+%      \usebeamerfont{author in sidebar}
+%      \insertshortauthor[width=\beamer@tempdim,center,respectlinebreaks]\par
+%    }
+
+    
+    %\insertverticalnavigation{\beamer@sidebarwidth}
+    \vfill
+    \ifx\beamer@sidebarside\beamer@lefttext
+    \else
+      \usebeamercolor{normal text}
+      %\llap{\usebeamertemplate***{navigation symbols}\hskip0.1cm}
+      \vskip2pt
+    \fi
+  }
+
+  \ifx\beamer@sidebarside\beamer@lefttext
+    \defbeamertemplate*{sidebar right}{sidebar theme}
+    {
+      \vfill
+      %\llap{\usebeamertemplate***{navigation symbols}\hskip0.1cm}
+      \vskip2pt}
+  \fi
+
+  % Margins
+  \setbeamersize{text margin left=0.1cm,text margin right=0.1cm}
+  
+\fi
+
+\AtBeginDocument{
+  \pgfdeclarehorizontalshading[frametitle.bg,frametitle right.bg]{beamer@frametitleshade}{\paperheight}{
+    color(0pt)=(frametitle.bg);
+    color(\paperwidth)=(frametitle right.bg)}
+  \pgfdeclareverticalshading{beamer@topborder}{\paperwidth}{
+    color(0pt)=(black);
+    color(1pt)=(black)}
+  \pgfdeclarehorizontalshading{beamer@sideborder}{\paperheight}{
+    color(0pt)=(black);
+    color(1pt)=(black)}
+  \pgfdeclareverticalshading{beamer@topshade}{\paperwidth}{
+    color(0pt)=(bg);
+    color(4pt)=(black!50!bg)}
+  \pgfdeclareverticalshading{beamer@topshadesidebarcover}{\beamer@sidebarwidth}{
+    color(0pt)=(UNL@MainBG);
+    color(4pt)=(UNL@MainBG)}
+  \pgfdeclareverticalshading{beamer@topshadesidebarcoverwhite}{0pt}{
+    color(0pt)=(white);
+    color(4pt)=(white)}
+  \pgfdeclarehorizontalshading{beamer@sideshade}{\paperheight}{
+    color(0pt)=(black!50!bg);
+    color(4pt)=(bg)}
+}
+
+% Add shadow to frame title
+\addtobeamertemplate{headline}{}{
+  \hskip\beamer@sidebarwidth\pgfuseshading{beamer@topshadesidebarcoverwhite}\pgfuseshading{beamer@topshade}
+  \vskip-6pt
+  \hskip-4pt
+  \pgfuseshading{beamer@topshadesidebarcover}
+  \vskip-2pt
+}
+
+\setbeamertemplate{navigation symbols}{}
+
+% Add page numbering to bottom left.
+% simply setting it (\setbeamertemplate{footline}[page number]) defaults to lower right
+\setbeamertemplate{footline} {
+  %\usebeamercolor{titlelike}
+  %\usebeamercolor[fg]{logo}
+  \insertframenumber\,/\,\inserttotalframenumber
+}
+
+\addtobeamertemplate{sidebar \beamer@sidebarside}
+{}
+{
+  %drop-shadow:
+  \vskip-\paperwidth\hskip\beamer@sidebarwidth\pgfuseshading{beamer@sideshade}
+%border: \vskip-\paperwidth\hskip\beamer@sidebarwidth\pgfuseshading{beamer@sideborder}
+}
+% End Shadow
+
+% Handout Mode - Using the default layouts, no menus, etc.
+\mode
+<handout>
+\usetheme{default}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\useinnertheme{default}
+
+% Settings for every mode
+\mode
+<all>
+
+% Algorithms
+\newtheorem{algorithmblock}[theorem]{Algorithm}
+\newtheorem{exercise}[theorem]{Exercise}
+%\newtheorem{problem}[theorem]{Problem}
+
+%Two horrible hacks to get a "note page" after every slide.
+\newcommand{\noteframe}{
+\only<handout>{ 
+  \begin{frame}
+   \frametitle{Notes}
+   \begin{center}
+   \begin{tikzpicture}
+    \foreach \y in {0,1,2,3,4,5,6}
+     \draw[thick] (0,\y) -- (11,\y);
+   \end{tikzpicture}
+   \end{center}
+  \end{frame}
+  }
+}
+
+\newcommand{\noteslide}{%to be used after every \framebreak
+\only<handout>{ 
+   \begin{center}
+   \begin{tikzpicture}
+    \foreach \y in {0,1,2,3,4,5,6}
+     \draw[thick] (0,\y) -- (11,\y);
+   \end{tikzpicture}
+   \end{center}
+   \framebreak
+   }
+}
+
+\setlength{\parskip}{.25cm}
+%\def\mathfamilydefault{\rmdefault}\beamer@sansmathfalse
+\usefonttheme[onlymath]{serif}
+\beamertemplatetheoremsunnumbered  %This suppresses theorem numbers
