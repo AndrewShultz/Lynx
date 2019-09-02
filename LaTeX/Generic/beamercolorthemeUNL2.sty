@@ -1,0 +1,76 @@
+
+\definecolor{UNL@MainBG}{RGB}{140,17,17}
+\definecolor{UNL@SecBG}{RGB}{0,0,0}
+\definecolor{UNL@Cream}{RGB}{245,240,219}
+\definecolor{UNL@DarkGrey}{RGB}{35,35,35}
+\definecolor{UNL@Grey}{RGB}{100,100,100}
+\definecolor{UNL@LightGrey}{RGB}{200,200,200}
+\definecolor{UNL@VeryLightGrey}{RGB}{225,225,225}
+
+
+
+\mode<presentation>
+
+%OUTER
+
+\setbeamercolor*{structure}{fg=UNL@SecBG,bg=UNL@MainBG}
+
+\setbeamercolor*{palette primary}{use=structure,fg=structure.fg,bg=structure.bg}
+\setbeamercolor*{palette secondary}{use=structure,fg=structure.fg,bg=structure.bg!75!black}
+\setbeamercolor*{palette tertiary}{use=structure,fg=structure.fg,bg=structure.bg!50!black}
+\setbeamercolor*{palette quaternary}{fg=white,bg=black}
+
+\setbeamercolor*{sidebar}{use=structure,bg=structure.bg}
+  
+\setbeamercolor*{palette sidebar primary}{use=structure,fg=structure.fg!10}
+\setbeamercolor*{palette sidebar secondary}{fg=white}
+\setbeamercolor*{palette sidebar tertiary}{use=structure,fg=structure.fg!50}
+\setbeamercolor*{palette sidebar quaternary}{fg=white}
+
+\setbeamercolor*{titlelike}{parent=palette primary}
+
+\setbeamercolor*{separation line}{}
+\setbeamercolor*{fine separation line}{}
+
+%INNER
+
+\setbeamercolor{block title}{use=structure,fg=white,bg=structure.fg!75!black}
+\setbeamercolor{block title example}{fg=white,bg=black} %
+\setbeamercolor{block title alerted}{fg=block title.fg,bg=block title.bg} %
+
+\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!10!bg}
+\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!10!bg}
+\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!10!bg}
+
+
+%CUSTOM
+
+\setbeamercolor{titlelike}{fg=UNL@Cream,bg=UNL@MainBG}
+\setbeamercolor{sidebar}{fg=UNL@Cream}
+\setbeamercolor{frametitle}{fg=UNL@Cream}
+\setbeamercolor{frametitle2}{fg=UNL@Cream,bg=UNL@SecBG}
+\setbeamercolor{title in sidebar}{fg=UNL@Cream}
+\setbeamercolor{author in sidebar}{fg=UNL@Cream}
+\setbeamercolor{section in sidebar shaded}{fg=UNL@Cream}
+\setbeamercolor{subsection in sidebar shaded}{fg=UNL@Cream}
+\setbeamercolor{logo}{fg=black,bg=white}
+
+% Only one of these needed? Maybe the second?
+\setbeamercolor*{section in sidebar shaded}{parent=palette sidebar secondary}
+\setbeamercolor*{section in sidebar}{parent=section in sidebar shaded,use={sidebar,section in sidebar shaded},fg=UNL@MainBG,bg=UNL@Cream}
+
+\setbeamercolor*{subsection in sidebar shaded}{parent=palette sidebar primary}
+\setbeamercolor*{subsection in sidebar}{parent=subsection in sidebar shaded,use=section in sidebar,bg=section in sidebar.bg,fg=section in sidebar.fg}
+
+
+
+\mode
+<handout>
+
+\setbeamercolor{block title}{fg=black,bg=UNL@LightGrey} 
+\setbeamercolor{block body}{fg=black,bg=UNL@VeryLightGrey} 
+
+
+\mode
+<all>
+
