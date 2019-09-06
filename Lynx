@@ -36,6 +36,7 @@ source ${HOME}/Lynx/UW-M.alias
 source ${HOME}/Lynx/UW-M.fun
 #all things relating to mini KU computer
 source ${HOME}/Lynx/KU.alias
+source ${HOME}/Lynx/KU.fun
 #things for stretching
 source ${HOME}/Lynx/workout.fun
 
