@@ -31,9 +31,11 @@ source ${HOME}/Lynx/systemPower.fun
 source ${HOME}/Lynx/latex.fun
 #all things relating to handling files
 source ${HOME}/Lynx/files.fun
-#all things relating to the UW ccluster
+#all things relating to the UW cluster
 source ${HOME}/Lynx/UW-M.alias
 source ${HOME}/Lynx/UW-M.fun
+#all things relating to mini KU computer
+source ${HOME}/Lynx/KU.alias
 #things for stretching
 source ${HOME}/Lynx/workout.fun
 

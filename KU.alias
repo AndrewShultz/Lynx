@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export KUAPLOG=andrew@kuap.phsx.ku.edu
+alias KUPO="ssh -Y ${KUAPLOG}"
