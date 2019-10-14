@@ -1,0 +1,44 @@
+\documentclass[12pt]{article}
+\usepackage{genericdocument}
+
+% Just in case the font needs changing
+%\usepackage{fontspec}
+%\setmainfont{ASFont}
+
+% Are massive margins ever really needed? Minimize whitespace, reduce margins.
+\addtolength{\oddsidemargin}{-.75in}
+\addtolength{\evensidemargin}{-.75in}
+\addtolength{\textwidth}{1.5in}
+\addtolength{\topmargin}{-1.in}
+\addtolength{\textheight}{2.in}
+
+% Automatic indents begone
+\setlength\parindent{0pt}
+
+% Page numbering not always needed
+\pagenumbering{gobble}
+
+% For equation labeling
+\creflabelformat{equation}{#2#1#3}
+
+% For code blocks
+\lstset{numbers=left,xleftmargin=4em,frame=single,framexleftmargin=0.0em}
+%code block (C++) useage:
+%\begin{lstlisting}
+%\end{lstlisting}
+\lstset { %
+    language=C++,
+    backgroundcolor=\color{black!5}, % set backgroundcolor
+    basicstyle=\footnotesize,% basic font setting
+    breaklines=true,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+
+% I don't like double spacing after periods
+\frenchspacing
+
+\begin{document}
+
+\input{intro}
+
+\end{document} 

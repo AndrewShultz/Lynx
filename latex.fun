@@ -216,13 +216,13 @@ ts-start()###USE###
 	read mainfilename
 
 	cp "${temples[$cho]}" "./${mainfilename}.tex"
-	cp "${HOME}/Lynx/LaTeX/Generic/macros.sty" ./
 	openfiles="${mainfilename}.tex"
 	
 	if [[ "${temples[$cho]##*/}" == "GenericReport.tex" ]]
 	then
 	    cat "${HOME}/Lynx/LaTeX/Generic/intro.tex" | sed -e "s^???TITLE???^$mainfilename^g" > ./intro.tex
 	    cp "${HOME}/Lynx/LaTeX/Generic/genericdocument.sty" ./
+	    cp "${HOME}/Lynx/LaTeX/Generic/macros.sty" ./
 	    cp "${HOME}/Lynx/LaTeX/Classes/ASReport.cls" ./
 	    openfiles+=" intro.tex"
 	fi
@@ -230,8 +230,15 @@ ts-start()###USE###
 	then
 	    cat "${HOME}/Lynx/LaTeX/Generic/p1.tex" | sed -e "s^???TITLE???^$mainfilename^g" > ./p1.tex
 	    cp "${HOME}/Lynx/LaTeX/Generic/genericpresentation.sty" ./
+	    cp "${HOME}/Lynx/LaTeX/Generic/macros.sty" ./
 	    openfiles+=" p1.tex"
 	    #cp "${HOME}/Lynx/LaTeX/Generic/p1.tex" ./
+	fi
+
+	if [[ "${temples[$cho]##*/}" == "Simple.tex" ]]
+	   then
+	    cat "${HOME}/Lynx/LaTeX/Generic/intro.tex" | sed -e "s^???TITLE???^$mainfilename^g" > ./intro.tex
+	    cp "${HOME}/Lynx/LaTeX/Generic/genericdocument.sty" ./
 	fi
 	
     fi
