@@ -193,3 +193,4 @@ Version 2016-06-19"
 )
 (global-set-key (kbd "<f8>") 'autoindent)
 
+(global-set-key (kbd "<f2>") 'ibuffer)
